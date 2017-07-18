@@ -22,6 +22,19 @@ let stocks = [
   }
 ];
 
+const DAILY_CHANGE_STATE_PERCENTAGE = "percentage";
+const DAILY_CHANGE_STATE_VALUE = "value";
+
+let dailyChangeState = DAILY_CHANGE_STATE_PERCENTAGE;
+
+function toggleDailyChangeState() {
+  if (dailyChangeState === DAILY_CHANGE_STATE_PERCENTAGE) {
+    dailyChangeState = DAILY_CHANGE_STATE_VALUE;
+  }else if (dailyChangeState === DAILY_CHANGE_STATE_VALUE) {
+    dailyChangeState = DAILY_CHANGE_STATE_PERCENTAGE;
+  }
+}
+
 function renderFirstTime() {
   const stocksListPageTemplate = `
 <div class="Stocks-List-Page">
@@ -62,7 +75,7 @@ function createStockListItem(stockItem) {
   <span class="comp-stock-price">${toFixed2(stockItem.LastTradePriceOnly)}</span>
   </div>
   <div class="daily-change-container">
-  <button class="daily-change">${stockItem.PercentChange}</button>
+  <button class="daily-change" data-state="">${stockItem.PercentChange}</button>
   </div>
   <div class="up-down-buttons-container">
   <div class="up-down-buttons">
@@ -86,6 +99,38 @@ function renderPage(stocksUL){
 }
 
 function addEvents(){
+  document.querySelector('.stocks-list').addEventListener('click', (e)=>{
+    const clickedElement = e.target;
+    if (clickedElement.className.includes('daily-change')) {
+      dailyChangeButtonClickHandler(clickedElement);
+    }
+  })
+}
+
+function dailyChangeButtonClickHandler(btn){
+  toggleDailyChangeState();
+
+  let liParent = getParentByTag(btn, 'LI');
+  let symbol = liParent.getAttribute('data-id');
+  let elementData = stocks.find((data)=> {
+    return data.Symbol === symbol;
+  });
+
+  if (dailyChangeState === DAILY_CHANGE_STATE_PERCENTAGE) {
+    btn.innerHTML = elementData.PercentChange;
+  }else if (dailyChangeState === DAILY_CHANGE_STATE_VALUE) {
+    btn.innerHTML = toFixed2(elementData.Change);
+  }
+}
+
+function getParentByTag(element, tag){
+  let parent = element.parentElement;
+  while (parent){
+    if (parent.tagName === tag){
+      return parent;
+    }
+    parent = parent.parentElement;
+  }
 }
 
 
