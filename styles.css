@@ -1,0 +1,54 @@
+.Stocks-List-Page {
+  background-color: #f0f4f7;
+}
+
+.Stocks-List-Page main li {
+  border-top: 1px solid #e5e5e5;
+}
+
+.content-container {
+  background-color: #ffffff;
+}
+
+.stokr-logo-container > span {
+  font-family: LucidaGrande, serif;
+  font-size: 39px;
+  font-weight: bold;
+  text-align: left;
+  color: #41bf15;
+}
+
+.comp-name {
+  font-family: Avenir, serif;
+  font-size: 33px;
+  font-weight: 300;
+  text-align: left;
+  color: #59737c;
+}
+
+.comp-stock-price {
+  font-family: HelveticaNeueW01-55Roman, serif;
+  font-size: 30px;
+  text-align: left;
+  color: #59737c;
+}
+
+.daily-change {
+  border-radius: 10px;
+  background-color: #ff4f46;
+  border-color: #ff4f46;
+
+  font-family: Avenir, serif;
+  font-size: 34px;
+  font-weight: 300;
+  text-align: center;
+  color: #ffffff;
+}
+
+.up-down-buttons button:first-child {
+  background-color: #ababab;
+}
+
+.up-down-buttons button:last-child {
+  background-color: #ababab;
+}

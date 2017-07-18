@@ -1,0 +1,124 @@
+.Stocks-List-Page {
+  width: 1300px;
+  height: 819px;
+  margin: auto;
+  padding-top:56px;
+  padding-right: 42px;
+  padding-left: 42px;
+  padding-bottom: 66px;
+}
+
+.Stocks-List-Page header {
+  display: flex;
+  height: 128px;
+}
+
+.Stocks-List-Page main ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.Stocks-List-Page main li {
+  height: 115px;
+  display: flex;
+  align-items: center;
+}
+
+.content-container {
+  width: 1300px;
+  height: 819px;
+  margin: auto;
+}
+
+.stokr-logo-container {
+  flex-basis: 1033px;
+  position: relative;
+}
+
+.stokr-logo-container > span {
+  width: 166px;
+  height: 46px;
+  text-align: left;
+  position: absolute;
+  top: 38px;
+  left: 29px;
+}
+
+.functional-buttons-container {
+  flex-basis: 266px;
+  display: flex;
+  align-items: center;
+}
+
+.line-container {
+  margin-left: 29px;
+  display: flex;
+  height: 100%;
+  flex-basis: 100%;
+  align-items: center;
+}
+
+.line-container > span {
+  flex-basis: 933px;
+}
+
+.line-container-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-basis: 367px;
+}
+
+.comp-name {
+  width: 465px;
+  height: 45px;
+  text-align: left;
+}
+
+.comp-stock-price-container {
+  flex-basis: 134px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comp-stock-price-container span {
+  text-align: right;
+  margin-right: 29px;
+}
+
+.comp-stock-price {
+  width: 99px;
+  height: 35px;
+  text-align: left;
+}
+
+.daily-change-container {
+  flex-basis: 176px;
+}
+
+.daily-change {
+  width: 150px;
+  height: 56px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.up-down-buttons-container {
+  display: flex;
+  height: 36px;
+  align-items: center;
+}
+
+.up-down-buttons button:first-child {
+  width: 25px;
+  height: 16px;
+}
+
+.up-down-buttons button:last-child {
+  width: 25px;
+  height: 16px;
+  margin-top: 4px;
+}
