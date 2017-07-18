@@ -43,6 +43,8 @@
   font-weight: 300;
   text-align: center;
   color: #ffffff;
+
+  outline: none;
 }
 
 .up-down-buttons button:first-child {
