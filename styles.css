@@ -1,3 +1,7 @@
+button {
+  outline: none;
+}
+
 .Stocks-List-Page {
   background-color: #f0f4f7;
 }
@@ -19,9 +23,10 @@
 }
 
 .comp-name {
-  font-family: Avenir, serif;
+  font-family: 'Nunito', sans-serif;
+  /*font-family: Avenir, serif;*/
   font-size: 33px;
-  font-weight: 300;
+  font-weight: 200;
   text-align: left;
   color: #59737c;
 }
@@ -33,18 +38,24 @@
   color: #59737c;
 }
 
-.daily-change {
-  border-radius: 10px;
+.daily-change-positive {
+  background-color: #63da39;
+  border-color: #63da39;
+}
+
+.daily-change-negative {
   background-color: #ff4f46;
   border-color: #ff4f46;
+}
+
+.daily-change {
+  border-radius: 10px;
 
   font-family: Avenir, serif;
   font-size: 34px;
   font-weight: 300;
   text-align: center;
   color: #ffffff;
-
-  outline: none;
 }
 
 .up-down-buttons button:first-child {
