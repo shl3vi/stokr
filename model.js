@@ -3,30 +3,48 @@
 
   window.Stokr = window.Stokr || {};
 
-  function initStocksDisplayOrder() {
-    this.stocks.forEach((stock, index) => {
-      index = parseInt(index);
-      this.stocksDisplayOrder[index] = index;
-    });
+  function reorderStocksUp(symbol) {
+    const index = this.getStockIndexBySymbol(symbol);
+    this.reorderStocks(index, index - 1, 0);
   }
 
-  function reorderStocksUp(index) {
-    index = parseInt(index);
-    if (index === 0) {
-      return;
-    }
-
-    utils.swapInArray(this.stocksDisplayOrder, index, index - 1);
-  }
-
-  function reorderStocksDown(index) {
-    index = parseInt(index);
+  function reorderStocksDown(symbol) {
+    const index = this.getStockIndexBySymbol(symbol);
     const lastIndex = this.stocksDisplayOrder.length - 1;
-    if (index === lastIndex) {
+    this.reorderStocks(index, index + 1, lastIndex);
+  }
+
+  function reorderStocks(index, indexToSwapWith, exceptionIndex) {
+    if (index === exceptionIndex) {
       return;
     }
+    utils.swapInArray(this.stocksDisplayOrder, index, indexToSwapWith);
+  }
 
-    utils.swapInArray(this.stocksDisplayOrder, index, index + 1);
+  function getStockBySymbol(symbol) {
+    return this.stocks.find((stock) => {
+      return stock.Symbol === symbol;
+    })
+  }
+
+  function getStockByIndex(index) {
+    return this.getStockBySymbol(this.stocksDisplayOrder[index]);
+  }
+
+  function getStockIndexBySymbol(symbol) {
+    return this.stocksDisplayOrder.findIndex((stockSymbol) => {
+      return stockSymbol === symbol;
+    })
+  }
+
+  function initStocksDisplayOrder() {
+    this.stocks.forEach((stock) => {
+      this.stocksDisplayOrder.push(stock.Symbol);
+    })
+  }
+
+  function getStocksSize() {
+    return this.stocks.length;
   }
 
   window.Stokr.Model = {
@@ -55,11 +73,16 @@
       }
     ],
 
-    stocksDisplayOrder : {},
+    stocksDisplayOrder: [],
 
-    reorderStocksDown: reorderStocksDown,
-    reorderStocksUp: reorderStocksUp,
-    initStocksDisplayOrder: initStocksDisplayOrder
+    reorderStocksDown,
+    reorderStocksUp,
+    getStockBySymbol,
+    initStocksDisplayOrder,
+    getStockIndexBySymbol,
+    getStocksSize,
+    getStockByIndex,
+    reorderStocks
   }
 
 })();

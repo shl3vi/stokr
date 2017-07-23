@@ -4,7 +4,7 @@
   window.Stokr = window.Stokr || {};
 
   const Model = window.Stokr.Model;
-  const View = window.Stokr.View;
+  // const View = window.Stokr.View;
 
   const DAILY_CHANGE_STATE_PERCENTAGE = "percentage";
   const DAILY_CHANGE_STATE_VALUE = "value";
@@ -53,18 +53,17 @@
   }
 
   function createStockListItems() {
-    const len = Model.stocks.length;
+    const len = Model.getStocksSize();
     let liHtml = '';
-    for (let orderedIndex = 0; orderedIndex < len; orderedIndex++) {
-      let actualIndex = Model.stocksDisplayOrder[orderedIndex];
-      liHtml += createStockListItem(Model.stocks[actualIndex], orderedIndex);
+    for (let i = 0; i < len; i++) {
+      liHtml += createStockListItem(Model.getStockByIndex(i));
     }
     return liHtml;
   }
 
-  function createStockListItem(stockItem, orderedIndex) {
+  function createStockListItem(stockItem) {
     const stockLi = `
-  <li data-id="${orderedIndex}">
+  <li data-id="${stockItem.Symbol}">
   <div class="line-container">
   <span class="comp-name">${stockItem.Name}</span>
 <div class="line-container-right">
@@ -160,11 +159,11 @@
   }
 
   function changeLiDailyChange(li) {
-    let orderedIndex = li.getAttribute('data-id');
+    let symbol = li.getAttribute('data-id');
 
     let btn = li.querySelector('button');
 
-    let elementData = Model.stocks[Model.stocksDisplayOrder[orderedIndex]];
+    let elementData = Model.getStockBySymbol(symbol);
 
     btn.innerHTML = getDailyChangeButtonValue(elementData);
   }
