@@ -47,7 +47,22 @@
     return this.stocks.length;
   }
 
+  function toggleDailyChangeState() {
+    if (this.dailyChangeState === this.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE) {
+      this.dailyChangeState = this.dailyChangeStates.DAILY_CHANGE_STATE_VALUE;
+    } else if (this.dailyChangeState === this.dailyChangeStates.DAILY_CHANGE_STATE_VALUE) {
+      this.dailyChangeState = this.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE;
+    }
+  }
+
   window.Stokr.Model = {
+
+    dailyChangeStates : {
+      DAILY_CHANGE_STATE_PERCENTAGE : "percentage",
+      DAILY_CHANGE_STATE_VALUE : "value"
+    },
+
+    dailyChangeState : null,
 
     stocks: [
       {
@@ -82,7 +97,8 @@
     getStockIndexBySymbol,
     getStocksSize,
     getStockByIndex,
-    reorderStocks
+    reorderStocks,
+    toggleDailyChangeState
   }
 
 })();

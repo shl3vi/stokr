@@ -11,17 +11,10 @@
 
   let dailyChangeState = DAILY_CHANGE_STATE_PERCENTAGE;
 
-  function toggleDailyChangeState() {
-    if (dailyChangeState === DAILY_CHANGE_STATE_PERCENTAGE) {
-      dailyChangeState = DAILY_CHANGE_STATE_VALUE;
-    } else if (dailyChangeState === DAILY_CHANGE_STATE_VALUE) {
-      dailyChangeState = DAILY_CHANGE_STATE_PERCENTAGE;
-    }
-  }
-
   function renderFirstTime() {
 
     Model.initStocksDisplayOrder();
+    Model.dailyChangeState = Model.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE;
 
     const stocksListPageTemplate = `
 <div class="Stocks-List-Page">
@@ -97,9 +90,9 @@
   }
 
   function getDailyChangeButtonValue(stockItem) {
-    if (dailyChangeState === DAILY_CHANGE_STATE_PERCENTAGE) {
+    if (Model.dailyChangeState === Model.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE) {
       return stockItem.PercentChange;
-    } else if (dailyChangeState === DAILY_CHANGE_STATE_VALUE) {
+    } else if (Model.dailyChangeState === Model.dailyChangeStates.DAILY_CHANGE_STATE_VALUE) {
       return utils.toFixed(stockItem.Change);
     }
   }
@@ -149,7 +142,7 @@
   }
 
   function dailyChangeButtonClickHandler(btn) {
-    toggleDailyChangeState();
+    Model.toggleDailyChangeState();
 
     let ulParent = getParentByTag(btn, 'UL');
     let childLis = ulParent.querySelectorAll('li');
