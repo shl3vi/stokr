@@ -65,3 +65,41 @@ button {
 .up-down-buttons button:last-child {
   background-color: #ababab;
 }
+
+[class*='icon-']:before {
+  display: inline-block;
+  font-family: 'Glyphter';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.functional-buttons-container > div > button {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 2rem;
+  color: #ababab;
+}
+
+.functional-buttons-container > div {
+  width: 67px;
+  height: 44px;
+}
+
+
+.icon-search:before {
+  content: '\0045';
+}
+.icon-refresh:before {
+  content: '\0043';
+}
+.icon-a:before {
+  content: '\0042';
+  background-color: transparent;
+}
+.icon-settings:before {
+  content: '\0046';
+}
+

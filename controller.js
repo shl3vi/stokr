@@ -39,10 +39,10 @@
   }
 
   function createFunctionalButtons() {
-    return `<div><button>A</button></div>
-  <div><button>A</button></div>
-  <div><button>A</button></div>
-  <div><button>A</button></div>`;
+    return `<div><button class="icon-search"></button></div>
+  <div><button class="icon-refresh"></button></div>
+  <div><button class="icon-a"></button></div>
+  <div><button class="icon-settings"></button></div>`;
   }
 
   function createStockListItems() {
