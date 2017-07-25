@@ -8,13 +8,20 @@
 
   function renderFirstTime() {
 
-    Model.initStocksDisplayOrder();
-    Model.dailyChangeState = Model.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE;
+    fetchStocks()
+      .then(function (stocks) {
+        Model.stocks = stocks;
 
-    const stockListItems = getOrderedStocks();
-    View.renderFirstTime(stockListItems);
+        Model.initStocksDisplayOrder();
 
-    View.addEvents();
+        const stockListItems = getOrderedStocks();
+        View.renderFirstTime(stockListItems);
+
+        View.addEvents();
+      })
+      .catch(function (err) {
+        console.log("Failed render stocks. Error: " + err);
+      });
   }
 
   function getOrderedStocks() {
@@ -29,20 +36,28 @@
     return orderedStocks;
   }
 
-  function reorderArrowClickUpHandler(symbol){
+  function reorderArrowClickUpHandler(symbol) {
     Model.reorderStocksUp(symbol);
     View.renderPage(getOrderedStocks());
   }
 
-  function reorderArrowClickDownHandler(symbol){
+  function reorderArrowClickDownHandler(symbol) {
     Model.reorderStocksDown(symbol);
     View.renderPage(getOrderedStocks());
   }
 
+  function fetchStocks() {
+    // url (required), options (optional)
+    return fetch('mocks/stocks.json')
+      .then(function (response) {
+        return response.json();
+      });
+  }
+
   function getDailyChangeButtonValue(stockItem) {
-    if (Model.dailyChangeState === Model.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE) {
+    if (Model.dailyChangeStates[0] === consts.dailyChangeState.DAILY_CHANGE_STATE_PERCENTAGE) {
       return stockItem.PercentChange;
-    } else if (Model.dailyChangeState === Model.dailyChangeStates.DAILY_CHANGE_STATE_VALUE) {
+    } else if (Model.dailyChangeStates[0] === consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE) {
       return utils.toFixed(stockItem.Change);
     }
   }
@@ -62,14 +77,13 @@
     getStockBySymbol,
     reorderArrowClickDownHandler,
     reorderArrowClickUpHandler,
-    toggleDailyChangeState
+    toggleDailyChangeState,
   }
 })();
 
 const Controller = window.Stokr.Controller;
 
 /* Start page rendering flow */
-
 Controller.renderFirstTime();
 
 const FIVE_MIN_IN_MILI = 1080000;

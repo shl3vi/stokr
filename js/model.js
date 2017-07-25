@@ -48,45 +48,18 @@
   }
 
   function toggleDailyChangeState() {
-    if (this.dailyChangeState === this.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE) {
-      this.dailyChangeState = this.dailyChangeStates.DAILY_CHANGE_STATE_VALUE;
-    } else if (this.dailyChangeState === this.dailyChangeStates.DAILY_CHANGE_STATE_VALUE) {
-      this.dailyChangeState = this.dailyChangeStates.DAILY_CHANGE_STATE_PERCENTAGE;
-    }
+    let currentDailyState = this.dailyChangeStates.shift();
+    this.dailyChangeStates.push(currentDailyState);
   }
 
   window.Stokr.Model = {
 
-    dailyChangeStates : {
-      DAILY_CHANGE_STATE_PERCENTAGE : "percentage",
-      DAILY_CHANGE_STATE_VALUE : "value"
-    },
-
-    dailyChangeState : null,
-
-    stocks: [
-      {
-        "Symbol": "WIX",
-        "Name": "Wix.com Ltd.",
-        "Change": "0.750000",
-        "PercentChange": "+1.51%",
-        "LastTradePriceOnly": "76.099998"
-      },
-      {
-        "Symbol": "MSFT",
-        "Name": "Microsoft Corporation",
-        "PercentChange": "-2.09%",
-        "Change": "-0.850006",
-        "LastTradePriceOnly": "69.620003"
-      },
-      {
-        "Symbol": "YHOO",
-        "Name": "Yahoo! Inc.",
-        "Change": "0.279999",
-        "PercentChange": "+1.11%",
-        "LastTradePriceOnly": "50.599998"
-      }
+    dailyChangeStates: [
+      consts.dailyChangeState.DAILY_CHANGE_STATE_PERCENTAGE,
+      consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE
     ],
+
+    stocks: [],
 
     stocksDisplayOrder: [],
 
@@ -99,6 +72,6 @@
     getStockByIndex,
     reorderStocks,
     toggleDailyChangeState
-  }
+  };
 
 })();
