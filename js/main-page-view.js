@@ -3,29 +3,6 @@
 
   window.Stokr = window.Stokr || {};
 
-  function renderFirstTime(stockListItems) {
-    const stocksListPageTemplate = `
-<div class="Stocks-List-Page">
-  <div class="content-container">
-  <header>
-  <div class="stokr-logo-container">
-  <span>stokr</span>
-  </div>
-  <div class="functional-buttons-container">
-  ${createFunctionalButtons()}
-  </div>
-  </header>
-  <main>
-  <ul class="stocks-list">${createStockListItems(stockListItems)}</ul>
-  </main>
-  </div>
-  </div>
-`;
-
-    document.querySelector('body').innerHTML = stocksListPageTemplate;
-
-  }
-
   function createStockListItems(stockListItems) {
     let liHtml = '';
     stockListItems.forEach((stock) => {
@@ -36,25 +13,25 @@
 
   function createStockListItem(stockItem) {
     const stockLi = `
-  <li data-id="${stockItem.Symbol}">
-  <div class="line-container">
-  <span class="comp-name">${stockItem.Name}</span>
-<div class="line-container-right">
-  <div class="comp-stock-price-container">
-  <span class="comp-stock-price">${utils.toFixed(stockItem.LastTradePriceOnly)}</span>
-  </div>
-  <div class="daily-change-container">
-  <button ${getDailyChangeButtonClass(stockItem)}>${stockItem.dailyChange}</button>
-  </div>
-  <div class="up-down-buttons-container">
-  <div class="up-down-buttons">
-  <button class="reorder-arrow reorder-up"></button>
-  <button class="reorder-arrow reorder-down"></button>
-  </div>
-  </div>
-  </div>
-  </div>
-  </li>`;
+      <li data-id="${stockItem.Symbol}">
+        <div class="line-container">
+          <span class="comp-name">${stockItem.Name}</span>
+          <div class="line-container-right">
+            <div class="comp-stock-price-container">
+              <span class="comp-stock-price">${utils.toFixed(stockItem.LastTradePriceOnly)}</span>
+            </div>
+            <div class="daily-change-container">
+              <button ${getDailyChangeButtonClass(stockItem)}>${stockItem.dailyChange}</button>
+            </div>
+            <div class="up-down-buttons-container">
+              <div class="up-down-buttons">
+                <button class="reorder-arrow reorder-up"></button>
+                <button class="reorder-arrow reorder-down"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>`;
 
     return stockLi;
   }
@@ -66,13 +43,6 @@
     }
 
     return `class="daily-change ${style}"`;
-  }
-
-  function createFunctionalButtons() {
-    return `<div><button class="icon-search"></button></div>
-  <div><button class="icon-refresh"></button></div>
-  <div><button class="icon-a"></button></div>
-  <div><button class="icon-settings"></button></div>`;
   }
 
   function addEvents() {
@@ -126,7 +96,6 @@
   }
 
   window.Stokr.MainPageView = {
-    renderFirstTime,
     renderPage,
     addEvents
   }
