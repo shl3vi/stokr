@@ -71,8 +71,8 @@
   };
 
   // register to the View's events
-  View.eventsListeners.onDailyChangeButtonClicked.push(dailyChangeButtonClickHandler);
-  View.eventsListeners.onReorderArrowUpClicked.push(reorderArrowClickUpHandler);
-  View.eventsListeners.onReorderArrowDownClicked.push(reorderArrowClickDownHandler);
+  utils.addEventListener(View, "onDailyChangeButtonClicked", dailyChangeButtonClickHandler);
+  utils.addEventListener(View, "onReorderArrowUpClicked", reorderArrowClickUpHandler);
+  utils.addEventListener(View, "onReorderArrowDownClicked", reorderArrowClickDownHandler);
 
 })();

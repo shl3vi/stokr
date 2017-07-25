@@ -49,7 +49,7 @@
     document.querySelector('.stocks-list').addEventListener('click', (e) => {
       const clickedElement = e.target;
       if (clickedElement.className.includes('daily-change')) {
-        dailyChangeButtonClickHandler(e);
+        dailyChangeButtonClickHandler();
       }
       else if (clickedElement.className.includes('reorder-arrow')) {
         reorderArrowClickHandler(clickedElement);
@@ -57,11 +57,8 @@
     });
   }
 
-  function dailyChangeButtonClickHandler(e) {
-    let self = window.Stokr.MainPageView;
-    self.eventsListeners.onDailyChangeButtonClicked.forEach(function(listener) {
-      listener(e);
-    });
+  function dailyChangeButtonClickHandler() {
+    utils.invokeListeners(window.Stokr.MainPageView, "onDailyChangeButtonClicked");
   }
 
   function renderPage(stockListItems) {
@@ -70,17 +67,12 @@
   }
 
   function reorderArrowClickHandler(arrow) {
-    let self = window.Stokr.MainPageView;
     let parentLi = utils.getParentByTag(arrow, 'LI');
     const symbol = parentLi.getAttribute('data-id');
     if (arrow.className.includes('reorder-up')) {
-      self.eventsListeners.onReorderArrowUpClicked.forEach(function(listener) {
-        listener(symbol);
-      });
+      utils.invokeListeners(window.Stokr.MainPageView, "onReorderArrowUpClicked", symbol);
     } else if (arrow.className.includes('reorder-down')) {
-      self.eventsListeners.onReorderArrowDownClicked.forEach(function(listener) {
-        listener(symbol);
-      });
+      utils.invokeListeners(window.Stokr.MainPageView, "onReorderArrowDownClicked", symbol);
     }
   }
 

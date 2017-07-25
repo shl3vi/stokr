@@ -14,10 +14,28 @@ const utils = {
     if (!parent) {
       return null;
     }
-    if (parent.tagName === tag.toUpperCase()){
+    if (parent.tagName === tag.toUpperCase()) {
       return parent;
     }
     return this.getParentByTag(parent, tag);
+  },
+
+  invokeListeners(_this, event/*, args for event-listener...*/){
+    const args = [];
+
+    // prepare the args for the listener
+    for (let i=2; i < arguments.length; i++){
+      args.push(arguments[i]);
+    }
+
+    // invoke all listeners
+    _this.eventsListeners[event].forEach(function(listener){
+      listener.apply(null, args);
+    })
+  },
+
+  addEventListener(invoker, event, listener){
+    invoker.eventsListeners[event].push(listener)
   }
 };
 
