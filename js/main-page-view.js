@@ -49,7 +49,7 @@
     document.querySelector('.stocks-list').addEventListener('click', (e) => {
       const clickedElement = e.target;
       if (clickedElement.className.includes('daily-change')) {
-        dailyChangeButtonClickHandler(clickedElement);
+        dailyChangeButtonClickHandler(e);
       }
       else if (clickedElement.className.includes('reorder-arrow')) {
         reorderArrowClickHandler(clickedElement);
@@ -57,26 +57,11 @@
     });
   }
 
-  function dailyChangeButtonClickHandler(btn) {
-    const Controller = window.Stokr.MainPageCtrl;
-    Controller.toggleDailyChangeState();
-
-    let ulParent = utils.getParentByTag(btn, 'UL');
-    let childLis = ulParent.querySelectorAll('li');
-    childLis.forEach((li) => {
-      changeLiDailyChange(li);
+  function dailyChangeButtonClickHandler(e) {
+    let self = window.Stokr.MainPageView;
+    self.eventsListeners.onDailyChangeButtonClicked.forEach(function(listener) {
+      listener(e);
     });
-  }
-
-  function changeLiDailyChange(li) {
-    const Controller = window.Stokr.MainPageCtrl;
-    let symbol = li.getAttribute('data-id');
-
-    let btn = li.querySelector('button');
-
-    let elementData = Controller.getStockBySymbol(symbol);
-
-    btn.innerHTML = Controller.getDailyChangeButtonValue(elementData);
   }
 
   function renderPage(stockListItems) {
@@ -85,17 +70,28 @@
   }
 
   function reorderArrowClickHandler(arrow) {
-    const Controller = window.Stokr.MainPageCtrl;
+    let self = window.Stokr.MainPageView;
     let parentLi = utils.getParentByTag(arrow, 'LI');
     const symbol = parentLi.getAttribute('data-id');
     if (arrow.className.includes('reorder-up')) {
-      Controller.reorderArrowClickUpHandler(symbol);
+      self.eventsListeners.onReorderArrowUpClicked.forEach(function(listener) {
+        listener(symbol);
+      });
     } else if (arrow.className.includes('reorder-down')) {
-      Controller.reorderArrowClickDownHandler(symbol);
+      self.eventsListeners.onReorderArrowDownClicked.forEach(function(listener) {
+        listener(symbol);
+      });
     }
   }
 
   window.Stokr.MainPageView = {
+
+    eventsListeners : {
+      onDailyChangeButtonClicked : [],
+      onReorderArrowUpClicked : [],
+      onReorderArrowDownClicked : []
+    },
+
     renderPage,
     addEvents
   }

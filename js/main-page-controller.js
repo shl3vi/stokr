@@ -6,24 +6,6 @@
   const Model = window.Stokr.Model;
   const View = window.Stokr.MainPageView;
 
-  // function renderFirstTime() {
-  //
-  //   fetchStocks()
-  //     .then(function (stocks) {
-  //       Model.stocks = stocks;
-  //
-  //       Model.initStocksDisplayOrder();
-  //
-  //       const stockListItems = getOrderedStocks();
-  //       View.renderFirstTime(stockListItems);
-  //
-  //       View.addEvents();
-  //     })
-  //     .catch(function (err) {
-  //       console.log("Failed render stocks. Error: " + err);
-  //     });
-  // }
-
   function getOrderedStocks() {
     const orderList = Model.stocksDisplayOrder;
     const orderedStocks = [];
@@ -47,7 +29,6 @@
   }
 
   function fetchStocks() {
-    // url (required), options (optional)
     return fetch('mocks/stocks.json')
       .then(function (response) {
         return response.json();
@@ -60,14 +41,6 @@
     } else if (Model.dailyChangeStates[0] === consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE) {
       return utils.toFixed(stockItem.Change);
     }
-  }
-
-  function getStockBySymbol(symbol) {
-    return Model.getStockBySymbol(symbol);
-  }
-
-  function toggleDailyChangeState() {
-    Model.toggleDailyChangeState();
   }
 
   function renderPage() {
@@ -88,31 +61,18 @@
 
   }
 
-  window.Stokr.MainPageCtrl = {
-    renderPage,
-    getOrderedStocks,
-    getDailyChangeButtonValue,
-    getStockBySymbol,
-    reorderArrowClickDownHandler,
-    reorderArrowClickUpHandler,
-    toggleDailyChangeState,
+  function dailyChangeButtonClickHandler() {
+    Model.toggleDailyChangeState();
+    View.renderPage(getOrderedStocks());
   }
+
+  window.Stokr.MainPageCtrl = {
+    renderPage
+  };
+
+  // register to the View's events
+  View.eventsListeners.onDailyChangeButtonClicked.push(dailyChangeButtonClickHandler);
+  View.eventsListeners.onReorderArrowUpClicked.push(reorderArrowClickUpHandler);
+  View.eventsListeners.onReorderArrowDownClicked.push(reorderArrowClickDownHandler);
+
 })();
-
-/* Start page rendering flow */
-// Controller.renderFirstTime();
-//
-// const FIVE_MIN_IN_MILI = 1080000;
-// setInterval(() => {
-//   View.renderPage(Controller.getOrderedStocks());
-// }, FIVE_MIN_IN_MILI);
-
-// Test Rendering..
-// setInterval(()=> {
-//   renderPage(stocksUL);
-// }, 1000);
-//
-// setInterval(()=> {
-//   stocks[0].Name = Date.now();
-// }, 1000);
-
