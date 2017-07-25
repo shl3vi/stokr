@@ -4,7 +4,7 @@
   window.Stokr = window.Stokr || {};
 
   function renderMainView() {
-    const PageTemplate = `
+    const pageTemplate = `
       <div class="Stocks-List-Page">
         <div class="content-container">
           <header>
@@ -22,7 +22,7 @@
       </div>
     `;
 
-    document.querySelector('body').innerHTML = PageTemplate;
+    document.querySelector('body').innerHTML = pageTemplate;
 
   }
 
