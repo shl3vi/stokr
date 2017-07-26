@@ -22,12 +22,12 @@
 
   function reorderArrowClickUpHandler(symbol) {
     Model.reorderStocksUp(symbol);
-    View.renderPage(getOrderedStocks(), Model.state.ui);
+    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
   }
 
   function reorderArrowClickDownHandler(symbol) {
     Model.reorderStocksDown(symbol);
-    View.renderPage(getOrderedStocks(), Model.state.ui);
+    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
   }
 
   function fetchStocks() {
@@ -58,7 +58,7 @@
         // Model.initStocksDisplayOrder();
 
         const stockListItems = getOrderedStocks();
-        View.renderPage(getOrderedStocks(stockListItems), Model.state.ui);
+        View.renderPage(getOrderedStocks(stockListItems), Model.getStokrState().ui);
 
         View.addEvents();
       })
@@ -70,7 +70,7 @@
 
   function dailyChangeButtonClickHandler() {
     Model.toggleDailyChangeState();
-    View.renderPage(getOrderedStocks());
+    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
   }
 
   window.Stokr.MainPageCtrl = {

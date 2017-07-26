@@ -52,13 +52,20 @@
     this.dailyChangeStates.push(currentDailyState);
   }
 
-  window.Stokr.Model = {
+  function getStokrState(){
+    let state = JSON.parse(window.localStorage.getItem("stokr-state"));
+    if (!state) {
+      window.localStorage.setItem("stokr-state", JSON.stringify({ui : {}}));
+      state = JSON.parse(window.localStorage.getItem("stokr-state"));
+    }
+    return state;
+  }
 
-    state : {
-      ui : {
-        isFilterShown : false
-      }
-    },
+  function setStokrState(state){
+    window.localStorage.setItem("stokr-state", JSON.stringify(state));
+  }
+
+  window.Stokr.Model = {
 
     dailyChangeStates: [
       consts.dailyChangeState.DAILY_CHANGE_STATE_PERCENTAGE,
@@ -81,7 +88,9 @@
     getStocksSize,
     getStockByIndex,
     reorderStocks,
-    toggleDailyChangeState
+    toggleDailyChangeState,
+    getStokrState,
+    setStokrState
   };
 
 })();

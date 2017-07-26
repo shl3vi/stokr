@@ -20,20 +20,26 @@
   }
 
   function onRefresh() {
-    Model.state.ui.isFilterShown = false;
-    Model.state.ui.isSettings = false;
+    let state = Model.getStokrState();
+    state.ui.isFilterShown = false;
+    state.ui.isSettings = false;
+    Model.setStokrState(state);
     MainPageCtrl.render();
   }
 
   function onFilterView() {
-    Model.state.ui.isFilterShown = true;
-    Model.state.ui.isSettings = false;
+    let state = Model.getStokrState();
+    state.ui.isFilterShown = true;
+    state.ui.isSettings = false;
+    Model.setStokrState(state);
     MainPageCtrl.render();
   }
 
   function onSettingsView() {
-    Model.state.ui.isFilterShown = false;
-    Model.state.ui.isSettings = true;
+    let state = Model.getStokrState();
+    state.ui.isFilterShown = false;
+    state.ui.isSettings = true;
+    Model.setStokrState(state);
     MainPageCtrl.render();
   }
 
