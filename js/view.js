@@ -29,22 +29,37 @@
   function createFunctionalButtons() {
     return `
       <div>
-        <button class="icon-search"></button>
+        <button><a class="icon-search" href="#search"></a></button>
       </div>
       <div>
-        <button class="icon-refresh"></button>
+        <button><a class="icon-refresh" href="#refresh"></a></button>
       </div>
       <div>
-        <button class="icon-filter"></button>
+        <button><a class="icon-filter" href="#filter"></a></button>
       </div>
       <div>
-        <button class="icon-settings"></button>
+        <button><a class="icon-settings" href="#settings"></a></button>
       </div>
       `;
   }
 
+  function addEvents() {
+    window.addEventListener('hashchange', onHashChangeHandler);
+  }
+
+  function onHashChangeHandler() {
+    utils.invokeListeners(window.Stokr.View, "onHashChanged")
+  }
+
   window.Stokr.View = {
-    renderMainView
+
+    eventsListeners : {
+      onHashChanged : [],
+      onFunctionalButtonsClicked : []
+    },
+
+    renderMainView,
+    addEvents
   }
 
 })();

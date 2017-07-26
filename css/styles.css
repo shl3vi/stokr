@@ -67,6 +67,7 @@ button {
 }
 
 [class*='icon-']:before {
+  color: #ababab;
   display: inline-block;
   font-family: 'Glyphter';
   font-style: normal;
@@ -101,5 +102,15 @@ button {
 }
 .icon-settings:before {
   content: '\0046';
+}
+
+#filter-main-div {
+  border-top: solid 1px #e5e5e5;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+#filter-submit-container button {
+  border: solid 1px #247906;
+  background-color: #41bf15;
 }
 

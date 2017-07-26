@@ -54,6 +54,12 @@
 
   window.Stokr.Model = {
 
+    state : {
+      ui : {
+        isFilterShown : false
+      }
+    },
+
     dailyChangeStates: [
       consts.dailyChangeState.DAILY_CHANGE_STATE_PERCENTAGE,
       consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE
@@ -61,7 +67,11 @@
 
     stocks: [],
 
-    stocksDisplayOrder: [],
+    stocksDisplayOrder: [
+      "WIX",
+      "MSFT",
+      "YHOO"
+    ],
 
     reorderStocksDown,
     reorderStocksUp,

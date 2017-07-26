@@ -36,6 +36,35 @@
     return stockLi;
   }
 
+  function createFilterForm() {
+    const form = `
+      <div id="filter-main-div">
+        <form action="">
+          <div>
+            <div>
+              <label for="">By Name<input type="text"></label>
+              <label for="">By Gain
+                <select>
+                  <option value="A">AAA</option>
+                  <option value="B">BBB</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label for="">By Range: From<input type="text"></label>
+              <label for="">By Range: To<input type="text"></label>
+            </div>
+          </div>
+          <div id="filter-submit-container">
+            <button></button>
+          </div>
+        </form>
+       </div>
+      `;
+
+    return form;
+  }
+
   function getDailyChangeButtonClass(stockItem) {
     let style = "daily-change-positive";
     if (stockItem.Change < 0) {
@@ -61,9 +90,15 @@
     utils.invokeListeners(window.Stokr.MainPageView, "onDailyChangeButtonClicked");
   }
 
-  function renderPage(stockListItems) {
+  function renderPage(stockListItems, uiState) {
     const STOCKS_UL = document.querySelector('.stocks-list');
-    STOCKS_UL.innerHTML = createStockListItems(stockListItems);
+    STOCKS_UL.innerHTML = "";
+
+    if (uiState.isFilterShown) {
+        STOCKS_UL.innerHTML = createFilterForm();
+    }
+
+    STOCKS_UL.innerHTML += createStockListItems(stockListItems);
   }
 
   function reorderArrowClickHandler(arrow) {

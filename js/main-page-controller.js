@@ -6,6 +6,8 @@
   const Model = window.Stokr.Model;
   const View = window.Stokr.MainPageView;
 
+  const STOKR_SERVER = "http://localhost:7000";
+
   function getOrderedStocks() {
     const orderList = Model.stocksDisplayOrder;
     const orderedStocks = [];
@@ -20,38 +22,43 @@
 
   function reorderArrowClickUpHandler(symbol) {
     Model.reorderStocksUp(symbol);
-    View.renderPage(getOrderedStocks());
+    View.renderPage(getOrderedStocks(), Model.state.ui);
   }
 
   function reorderArrowClickDownHandler(symbol) {
     Model.reorderStocksDown(symbol);
-    View.renderPage(getOrderedStocks());
+    View.renderPage(getOrderedStocks(), Model.state.ui);
   }
 
   function fetchStocks() {
-    return fetch('mocks/stocks.json')
+    const stocksQuery = createStocksQuery();
+    return fetch(stocksQuery)
       .then(function (response) {
         return response.json();
       });
   }
 
+  function createStocksQuery() {
+    return STOKR_SERVER + "/quotes?q=" + Model.stocksDisplayOrder.toString();
+  }
+
   function getDailyChangeButtonValue(stockItem) {
     if (Model.dailyChangeStates[0] === consts.dailyChangeState.DAILY_CHANGE_STATE_PERCENTAGE) {
-      return stockItem.PercentChange;
+      return utils.toFixed(stockItem.realtime_chg_percent);
     } else if (Model.dailyChangeStates[0] === consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE) {
-      return utils.toFixed(stockItem.Change);
+      return utils.toFixed(stockItem.realtime_change);
     }
   }
 
-  function renderPage() {
+  function render() {
     fetchStocks()
       .then(function (stocks) {
-        Model.stocks = stocks;
+        Model.stocks = stocks.query.results.quote;
 
-        Model.initStocksDisplayOrder();
+        // Model.initStocksDisplayOrder();
 
         const stockListItems = getOrderedStocks();
-        View.renderPage(getOrderedStocks(stockListItems));
+        View.renderPage(getOrderedStocks(stockListItems), Model.state.ui);
 
         View.addEvents();
       })
@@ -67,7 +74,7 @@
   }
 
   window.Stokr.MainPageCtrl = {
-    renderPage
+    render
   };
 
   // register to the View's events
