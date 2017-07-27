@@ -74,6 +74,10 @@
     return `class="daily-change ${style}"`;
   }
 
+  function functionalButtonClickHandler(state) {
+    utils.invokeListeners(window.Stokr.MainPageView, "onFunctionalButtonClicked", state);
+  }
+
   function addEvents() {
     document.querySelector('.stocks-list').addEventListener('click', (e) => {
       const clickedElement = e.target;
@@ -84,21 +88,71 @@
         reorderArrowClickHandler(clickedElement);
       }
     });
+
+    document.querySelector('.functional-buttons-container').addEventListener('click', (e) => {
+      const clickedElement = e.target;
+      if (clickedElement.className.includes('main-view-button')) {
+        const state = clickedElement.dataset["state"];
+        functionalButtonClickHandler(state);
+      }
+    });
   }
 
   function dailyChangeButtonClickHandler() {
     utils.invokeListeners(window.Stokr.MainPageView, "onDailyChangeButtonClicked");
   }
 
+
+  function renderBaseTemplate() {
+    let contentContainer = document.querySelector('.content-container');
+
+    let baseTemplate = `<header>
+            <div class="stokr-logo-container">
+              <span>stokr</span>
+            </div>
+            <div class="functional-buttons-container">
+              ${createFunctionalButtons()}
+            </div>
+          </header>
+          <main>
+            <ul class="stocks-list"></ul>
+          </main>`;
+
+    contentContainer.innerHTML = baseTemplate;
+  }
+
+  function createFunctionalButtons() {
+    return `
+      <div>
+        <button><a class="icon-search" href="#search"></a></button>
+      </div>
+      <div>
+        <button class="icon-refresh main-view-button" data-state="refresh"></button>
+      </div>
+      <div>
+        <button class="icon-filter main-view-button" data-state="filter""></button>
+      </div>
+      <div>
+        <button class="icon-settings main-view-button" data-state="settings"></button>
+      </div>
+      `;
+  }
+
   function renderPage(stockListItems, uiState) {
+    renderBaseTemplate();
+
     const STOCKS_UL = document.querySelector('.stocks-list');
     STOCKS_UL.innerHTML = "";
 
-    if (uiState.isFilterShown) {
+    if (uiState === "filter") {
         STOCKS_UL.innerHTML = createFilterForm();
     }
 
     STOCKS_UL.innerHTML += createStockListItems(stockListItems);
+
+    if (uiState === "settings") {
+      // add before to delete
+    }
   }
 
   function reorderArrowClickHandler(arrow) {
@@ -116,7 +170,8 @@
     eventsListeners : {
       onDailyChangeButtonClicked : [],
       onReorderArrowUpClicked : [],
-      onReorderArrowDownClicked : []
+      onReorderArrowDownClicked : [],
+      onFunctionalButtonClicked: []
     },
 
     renderPage,

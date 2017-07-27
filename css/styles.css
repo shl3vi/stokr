@@ -84,22 +84,28 @@ button {
   color: #ababab;
 }
 
+.functional-buttons-container > div > button:hover {
+  cursor: pointer;
+}
+
 .functional-buttons-container > div {
   width: 67px;
   height: 44px;
 }
 
-
 .icon-search:before {
   content: '\0045';
 }
+
 .icon-refresh:before {
   content: '\0043';
 }
+
 .icon-a:before {
   content: '\0042';
   background-color: transparent;
 }
+
 .icon-settings:before {
   content: '\0046';
 }

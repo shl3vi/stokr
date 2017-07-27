@@ -19,34 +19,6 @@
     View.addEvents();
   }
 
-  function onRefresh() {
-    let state = Model.getStokrState();
-    state.ui.isFilterShown = false;
-    state.ui.isSettings = false;
-    Model.setStokrState(state);
-    MainPageCtrl.render();
-  }
-
-  function onFilterView() {
-    let state = Model.getStokrState();
-    state.ui.isFilterShown = true;
-    state.ui.isSettings = false;
-    Model.setStokrState(state);
-    MainPageCtrl.render();
-  }
-
-  function onSettingsView() {
-    let state = Model.getStokrState();
-    state.ui.isFilterShown = false;
-    state.ui.isSettings = true;
-    Model.setStokrState(state);
-    MainPageCtrl.render();
-  }
-
-  function onSearchView() {
-    SearchPageCtrl.renderPage();
-  }
-
   window.Stokr.Controller = {
     renderMainView
   };
@@ -55,14 +27,11 @@
   const SearchPageCtrl = window.Stokr.SearchPageCtrl;
 
   const controllersHashesToRenderFunction = {
-    "#search": onSearchView,
-    "#": MainPageCtrl.renderPage,
-    "#refresh": onRefresh,
-    "#filter": onFilterView,
-    "#settings": onSettingsView
+    "#search": SearchPageCtrl.renderPage,
+    "#": MainPageCtrl.render,
   };
 
-  utils.addEventListener(View, "onHashChanged", function (newHash) {
+  utils.addEventListener(View, "onHashChanged", function () {
     renderInnerView();
   });
 

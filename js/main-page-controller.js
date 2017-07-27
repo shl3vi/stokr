@@ -22,12 +22,12 @@
 
   function reorderArrowClickUpHandler(symbol) {
     Model.reorderStocksUp(symbol);
-    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
+    renderPage(getOrderedStocks(), Model.mainViewState);
   }
 
   function reorderArrowClickDownHandler(symbol) {
     Model.reorderStocksDown(symbol);
-    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
+    renderPage(getOrderedStocks(), Model.mainViewState);
   }
 
   function fetchStocks() {
@@ -55,12 +55,8 @@
       .then(function (stocks) {
         Model.stocks = stocks.query.results.quote;
 
-        // Model.initStocksDisplayOrder();
-
         const stockListItems = getOrderedStocks();
-        View.renderPage(getOrderedStocks(stockListItems), Model.getStokrState().ui);
-
-        View.addEvents();
+        renderPage(getOrderedStocks(stockListItems), Model.mainViewState);
       })
       .catch(function (err) {
         console.log("Failed render stocks. Error: " + err);
@@ -68,9 +64,22 @@
 
   }
 
+  function functionalButtonClickedHandler(state) {
+    Model.mainViewState = state;
+    if (state === "refresh") {
+      return render();
+    }
+    renderPage(Model.stocks, state);
+  }
+
   function dailyChangeButtonClickHandler() {
     Model.toggleDailyChangeState();
-    View.renderPage(getOrderedStocks(), Model.getStokrState().ui);
+    renderPage(getOrderedStocks(), Model.mainViewState);
+  }
+
+  function renderPage(stocks, state) {
+    View.renderPage(stocks, state);
+    View.addEvents();
   }
 
   window.Stokr.MainPageCtrl = {
@@ -81,5 +90,6 @@
   utils.addEventListener(View, "onDailyChangeButtonClicked", dailyChangeButtonClickHandler);
   utils.addEventListener(View, "onReorderArrowUpClicked", reorderArrowClickUpHandler);
   utils.addEventListener(View, "onReorderArrowDownClicked", reorderArrowClickDownHandler);
+  utils.addEventListener(View, "onFunctionalButtonClicked", functionalButtonClickedHandler);
 
 })();

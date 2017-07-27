@@ -72,6 +72,8 @@
       consts.dailyChangeState.DAILY_CHANGE_STATE_VALUE
     ],
 
+    mainViewState : null,
+
     stocks: [],
 
     stocksDisplayOrder: [

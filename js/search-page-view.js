@@ -7,8 +7,9 @@
   }
 
   function renderPage() {
-    const stocksList = document.querySelector('.stocks-list');
-    stocksList.innerHTML = "";
+    let contentContainer = document.querySelector('.content-container');
+    let backRef = `<a href="#">BACK</a>`;
+    contentContainer.innerHTML = backRef;
   }
 
   window.Stokr.SearchPageView = {
